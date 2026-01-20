@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BudgetMotion - Take Control of Your Cash Flow</title>
+    <style>
+        :root {
+            --bg: #cbdceb;
+            --bg-alt: #ffffff;
+            --border: #dddddd;
+            --fg: #0f172a;
+            --muted: #475569;
+            --primary: #133e87;
+            --secondary: #608bc1;
+            --secondary-light: #cbdceb;
+            --warning: #ffa239;
+            --error: #fb4141;
+            --success: #78c841;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--bg-alt);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(19, 62, 135, 0.3);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .logo-icon {
+            width: 56px;
+            height: 56px;
+            position: relative;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(19, 62, 135, 0.2));
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--fg);
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: var(--muted);
+            margin-bottom: 48px;
+            line-height: 1.6;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .feature {
+            padding: 24px;
+            background: var(--bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(96, 139, 193, 0.2);
+            border-color: var(--secondary);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .feature-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .cta-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .cta-subtitle {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            display: flex;
+            gap: 12px;
+            max-width: 500px;
+            margin: 0 auto 20px;
+            flex-wrap: wrap;
+        }
+
+        input[type="email"],
+        input[type="text"] {
+            flex: 1;
+            min-width: 200px;
+            padding: 16px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            transition: all 0.3s ease;
+        }
+
+        input[type="email"]::placeholder,
+        input[type="text"]::placeholder {
+            color: #94a3b8;
+        }
+
+        input[type="email"]::placeholder::after,
+        input[type="text"]::placeholder::after {
+            content: " *";
+            color: var(--error);
+        }
+
+        input[type="email"]:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: white;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        input.error {
+            border-color: var(--error);
+        }
+
+        .error-message {
+            display: none;
+            color: var(--error);
+            font-size: 14px;
+            margin-top: 8px;
+            text-align: left;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        button {
+            padding: 16px 40px;
+            background: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(19, 62, 135, 0.3);
+            background: var(--bg);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(120, 200, 65, 0.3);
+            border-radius: 12px;
+        }
+
+        .benefits {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .benefit {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkmark {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 24px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group {
+                flex-direction: column;
+            }
+
+            input[type="email"],
+            input[type="text"] {
+                width: 100%;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo-icon">
+                <img src="budgetmotion-logo.png" alt="BudgetMotion Logo">
+            </div>
+            <div class="logo">BudgetMotion</div>
+        </div>
+        <h1>Take Control of Your Cash Flow</h1>
+        <p class="subtitle">Connect your accounts, create intelligent budgets, and forecast your financial future with confidence. Built for businesses and individuals who want complete control.</p>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🔗</div>
+                <div class="feature-title">Universal Connections</div>
+                <div class="feature-desc">Link every bank, crypto wallet, and credit provider with real-time syncing. See connection status at a glance and refresh data instantly without leaving the page.</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🛡️</div>
+                <div class="feature-title">Smart Alert Rules</div>
+                <div class="feature-desc">Automated guardrails protect your balances with buffer zones and overdraft warnings. Server-validated rules trigger safety alerts before you hit critical thresholds.</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-title">Automated Workflows</div>
+                <div class="feature-desc">Pre-built strategy templates for repayments and investments. Default actions and safe-zone hints make setting up painless financial automation a breeze.</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📊</div>
+                <div class="feature-title">Predictive Insights</div>
+                <div class="feature-desc">Powerful forecasting shows how cash flows shift when rules trigger. Understand your financial future with safety tabs and real-time analytics.</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-title">Bank-Grade Security</div>
+                <div class="feature-desc">End-to-end encryption protects all sensitive data, tokens, and connections. Your financial information stays secure in transit and at rest.</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <div class="feature-title">Flexible Tracking</div>
+                <div class="feature-desc">Provider-agnostic platform supports both automated syncing and manual entry. Track any account, anywhere, exactly how you want.</div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2 class="cta-title">Join the Waitlist</h2>
+            <p class="cta-subtitle">Be the first to know when BudgetMotion launches and get exclusive early access pricing</p>
+            
+            <form id="signupForm">
+                <div class="form-group">
+                    <input type="text" id="name" placeholder="Your name *" required>
+                    <input type="email" id="email" placeholder="Your email *" required>
+                </div>
+                <div class="error-message" id="errorMessage"></div>
+                <button type="submit">Join the Waitlist</button>
+                <div class="success-message" id="successMessage">
+                    ✓ You're on the list! We'll notify you as soon as BudgetMotion launches.
+                </div>
+            </form>
+        </div>
+
+        <div class="benefits">
+            <div class="benefit">
+                <span class="checkmark">✓</span>
+                <span>Early bird pricing</span>
+            </div>
+            <div class="benefit">
+                <span class="checkmark">✓</span>
+                <span>First to get access</span>
+            </div>
+            <div class="benefit">
+                <span class="checkmark">✓</span>
+                <span>No commitment required</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('signupForm');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const emailInput = document.getElementById('email');
+        const nameInput = document.getElementById('name');
+
+        // Email validation function
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Clear error when user types
+        emailInput.addEventListener('input', function() {
+            emailInput.classList.remove('error');
+            errorMessage.classList.remove('show');
+            errorMessage.textContent = '';
+        });
+
+        nameInput.addEventListener('input', function() {
+            nameInput.classList.remove('error');
+            errorMessage.classList.remove('show');
+            errorMessage.textContent = '';
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+            
+            // Clear previous errors
+            errorMessage.classList.remove('show');
+            errorMessage.textContent = '';
+            emailInput.classList.remove('error');
+            nameInput.classList.remove('error');
+            
+            // Validate name
+            if (name.length < 2) {
+                nameInput.classList.add('error');
+                errorMessage.textContent = 'Please enter a valid name';
+                errorMessage.classList.add('show');
+                return;
+            }
+            
+            // Validate email
+            if (!isValidEmail(email)) {
+                emailInput.classList.add('error');
+                errorMessage.textContent = 'Please enter a valid email address';
+                errorMessage.classList.add('show');
+                return;
+            }
+            
+            // Submit to Google Form
+            const formData = new FormData();
+            formData.append('entry.1111663567', name);
+            formData.append('entry.978857123', email);
+            
+            // Send to Google Form (no-cors mode)
+            fetch('https://docs.google.com/forms/u/0/d/e/1FAIpQLScF3MEckHhJg1HCh0fDGFjFnnk9IXHpZUzKCS62dJe3VM2ATw/formResponse', {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'
+            }).then(() => {
+                // Show success message
+                successMessage.style.display = 'block';
+                form.reset();
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            }).catch((error) => {
+                console.error('Error:', error);
+                // Still show success since no-cors doesn't return response
+                successMessage.style.display = 'block';
+                form.reset();
+            });
+        });
+    </script>
+</body>
+</html>
